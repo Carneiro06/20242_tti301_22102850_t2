@@ -29,8 +29,7 @@ const funcoes = {
 app.post("/eventos", (req, res) => {
     try {
         funcoes[req.body.tipo](req.body.dados);
-    }
-    catch (err) { }
+    } catch (err) { }
     res.status(200).send({ msg: "ok" });
 });
 
@@ -59,5 +58,5 @@ app.get('/lembretes/:id/observacoes', (req, res) => {
 });
 
 app.listen(5000, (() => {
-    console.log('Lembretes. Porta 5000');
+    console.log('Observacoes. Porta 5000');
 }));
