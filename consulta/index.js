@@ -1,8 +1,10 @@
+require('dotenv').config()
 const express = require("express");
 const axios = require("axios");
 const app = express();
 app.use(express.json());
 
+const { PORT } = process.env
 const baseConsulta = {};
 const funcoes = {
     LembreteCriado: (lembrete) => {
@@ -36,10 +38,10 @@ app.post("/eventos", (req, res) => {
     res.status(200).send(baseConsulta);
 });
 
-app.listen(6000, async () => {
-    console.log("Consultas. Porta 6000");
+app.listen(PORT, async () => {
+    console.log(`Consulta. ${PORT}`)
     const resp = await
-        axios.get("http://localhost:10000/eventos");
+        axios.get("http://barramento-de-eventos:10000/eventos");
     resp.data.forEach((valor, indice, colecao) => {
         try {
             funcoes[valor.tipo](valor.dados);

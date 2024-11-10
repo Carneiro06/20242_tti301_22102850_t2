@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: observacao-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: observacao
+  template:
+    metadata:
+      labels:
+        app: observacao
+    spec:
+      containers:
+        - name: observacao
+          image: henriquebc/observacao
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: observacao-clusterip-service
+spec:
+  selector:
+    app: observacao
+  type: ClusterIP
+  ports:
+    - name: observacao
+      protocol: TCP
+      port: 5000
+      targetPort: 5000

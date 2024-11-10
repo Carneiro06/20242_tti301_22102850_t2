@@ -4,6 +4,7 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 
+const { PORT } = process.env
 app.use(bodyParser.json());
 lembretes = {};
 id = 0;
@@ -24,7 +25,7 @@ app.post('/lembretes', async (req, res) => {
     lembretes[id] = {
         id, texto
     };
-    await axios.post("http://localhost:10000/eventos", {
+    await axios.post("http://barramento-de-eventos:10000/eventos", {
         tipo: "LembreteCriado",
         dados: {
             id,
@@ -35,6 +36,6 @@ app.post('/lembretes', async (req, res) => {
 
 });
 
-app.listen(4000, () => {
-    console.log('Lembretes. Porta 4000');
+app.listen(PORT, () => {
+    console.log(`Lembrete. Porta ${PORT}`)
 });

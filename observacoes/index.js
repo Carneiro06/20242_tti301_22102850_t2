@@ -6,6 +6,7 @@ const app = express();
 const axios = require('axios');
 app.use(bodyParser.json());
 
+const { PORT } = process.env
 const observacoesPorLembreteId = {};
 
 const funcoes = {
@@ -15,7 +16,7 @@ const funcoes = {
         const obsParaAtualizar = observacoes.find(o => o.id ===
             observacao.id)
         obsParaAtualizar.status = observacao.status;
-        axios.post('http://localhost:10000/eventos', {
+        axios.post('http://barramento-de-eventos:10000/eventos', {
             tipo: "ObservacaoAtualizada",
             dados: {
                 id: observacao.id,
@@ -41,7 +42,7 @@ app.post('/lembretes/:id/observacoes', async (req, res) => {
     observacoesDoLembrete.push({ id: idObs, texto, status: 'aguardando' });
     observacoesPorLembreteId[req.params.id] = observacoesDoLembrete;
 
-    await axios.post('http://localhost:10000/eventos', {
+    await axios.post('http://barramento-de-eventos:10000/eventos', {
         tipo: "ObservacaoCriada",
         dados: {
             id: idObs, texto, lembreteId: req.params.id, status: "aguardando"
@@ -57,6 +58,4 @@ app.get('/lembretes/:id/observacoes', (req, res) => {
     res.send(observacoesPorLembreteId[req.params.id] || []);
 });
 
-app.listen(5000, (() => {
-    console.log('Observacoes. Porta 5000');
-}));
+app.listen(PORT, () => console.log(`Observações. PORTA ${PORT}.`))
