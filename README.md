@@ -1,4 +1,4 @@
-## Nomes dos integrantes do grupo
+## Nomes dos alunos
 
 ### Eduardo Anjos Villela - 22.00506-4
 
